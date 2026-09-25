@@ -1,0 +1,23 @@
+services:
+  # --- FastAPI Python Backend ----------------------------
+  - type: web
+    name: areon-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port "
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: PYTHONPATH
+        value: .
+
+  # --- React Vite Frontend ------------------------------
+  - type: web
+    name: areon-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
